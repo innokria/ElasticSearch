@@ -18,7 +18,7 @@ PUT /table1
 }'
 
 # search all item  in table table1
--GET /table1/_search
+GET /table1/_search
 {
   "query":{
     "match_all": {}
@@ -26,14 +26,14 @@ PUT /table1
 }
 
 # search specific items in table1
--GET /table1/_search
+GET /table1/_search
 {
    "query" :{
      "match":{"speaker":"rahul"}
    }
 }
 # insert data into table1 with auto id
--POST /table1/_doc
+POST /table1/_doc
 {
   "speaker": "rahul singh",
   "speech_number":300
