@@ -1,6 +1,8 @@
 # ElasticSearch
 Elastic search cheat sheet
 #create table with name table1 in elastic search
+--------------
+##
 PUT /table1
 {
  "mappings": {
