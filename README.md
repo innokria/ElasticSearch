@@ -214,3 +214,40 @@ GET /nestedtable/_search
   }
 }
 
+# update by query
+ have an index already filled with many documents.
+All of the documents in the index have a name string field.
+Now query and update all of them which have name = A and set it to name = B
+# SQL - UPDATE FROM table SET name = 'B' WHERE name = 'A';
+POST my_index/_update_by_query
+{
+  "script": {
+    "inline": "ctx._source.name = 'B'",
+    "lang": "painless"
+  },
+  "query": {
+    "match": {
+      "name" : "A"
+    }
+  }
+}
+
+
+#If you want to simply count version conflicts, and not cause the _update_by_query to abort, you can set conflicts=proceed on the url or "conflicts": "proceed" in the request body.
+The simplest usage of _update_by_query just performs an update on every document in the index without changing the source.
+
+POST twitter/_doc/_update_by_query?conflicts=proceed
+
+
+
+
+# limit _update_by_query using the Query DSL. This will update all documents from the twitter index for the user rahul
+POST twitter/_update_by_query?conflicts=proceed
+{
+  "query": { 
+    "term": {
+      "user": "rahul"
+    }
+  }
+}
+
