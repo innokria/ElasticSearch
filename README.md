@@ -193,6 +193,16 @@ GET nestedtable/_search
     }
 }
 
+GET /item/_doc/aaa
+
+POST /item/_doc/aaa/_update
+{
+  "script": {
+    "source": "ctx._source.item = 's5';"
+  }
+}
+
+
 
 #
 
