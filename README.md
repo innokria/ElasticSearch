@@ -251,3 +251,48 @@ POST twitter/_update_by_query?conflicts=proceed
   }
 }
 
+
+
+
+## some more sample
+
+# current value
+
+"_source": {
+         "id": "5b1676493d21784208c36041",
+         "label": "name",
+         "properties": {
+           "name": "rahul"
+         },
+         "updatedAt": 1528259039542
+       }
+       
+# update it to
+   "_source": {
+             "dataSource": "ELASTIC",
+             "entity": "car",
+             "label": "car",
+             "id": "5b1676493d21784208c36041",
+             "properties": {
+                     "name": "rahul"
+                  },
+             "updatedAt": 1528259039542
+           }
+
+# query
+POST index/_update_by_query
+{
+  "query": {
+    "match": {
+      "id": "5b1676493d21784208c36041"
+    }
+  },
+  "script": {
+    "source": "ctx._source = params",
+    "params": {
+       "dataSource": "ELASTIC",
+       "entity": "car",
+       "label": "car"
+    }
+  }
+}
