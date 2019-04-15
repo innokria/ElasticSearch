@@ -297,3 +297,77 @@ POST index/_update_by_query
     }
   }
 }
+
+
+# table and and or condition
+# working serach by subject type and key and also by only subject type
+GET /mainTable/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "_id": "tibeid1"
+        }
+      },
+      "should": [
+        {
+          "nested": {
+            "path": "ItemSub",
+            "inner_hits": {
+              "size": 10,
+              "_source": true,
+              "name": "ItemSubResult"
+            },
+            "query": {
+              "match": {
+                "ItemSub.key": "9588540"
+              }
+            }
+          }
+        },
+        {
+          "nested": {
+            "path": "table2",
+            "inner_hits": {
+              "size": 10,
+              "_source": true,
+              "name": "table2.object"
+            },
+            "query": {
+              "match": {
+                "table2.object.type": "title"
+              }
+            }
+          }
+        },
+        {
+          "nested": {
+            "path": "table3.object",
+            "inner_hits": {
+              "size": 10,
+              "_source": true,
+              "name": "nested_table3"
+            },
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "table3.object.type": "avc"
+                    }
+                  },
+                  {
+                    "match": {
+                      "table3.object.type.key": "32701"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
