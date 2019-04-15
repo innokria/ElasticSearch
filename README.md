@@ -300,7 +300,7 @@ POST index/_update_by_query
 
 
 # table and and or condition
-# working serach by subject type and key and also by only subject type
+# 
 GET /mainTable/_search
 {
   "query": {
